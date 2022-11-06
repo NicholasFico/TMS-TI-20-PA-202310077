@@ -1,14 +1,20 @@
 package com.ibik.academic.academicservices.Program_Study;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+
+import com.ibik.academic.academicservices.program.Programs;
 
 @Entity
 @Table(name="Program_Study")
@@ -30,11 +36,13 @@ public class Program_Study implements Serializable {
     @NotEmpty(message = "Code is required")
     private String code;
 
-    @Column(length = 11)
-    private int program_id;
+    @ManyToOne
+    @JoinColumn(name = "program_id")
+    private Programs programs;
 
-    @Column(length = 11)
-    private int faculty_id;
+    @OneToMany
+    @JoinColumn(name = "faculty_id")
+    private Set<Program_Study> Departments;
 
     @Column(length = 11)
     private int department_id;
@@ -45,14 +53,14 @@ public class Program_Study implements Serializable {
     public Program_Study() {
     }
 
-    public Program_Study(int id, String name, String description, String code, int program_id, int faculty_id,
+    public Program_Study(int id, String name, String description, String code, Programs programs, Set<Program_Study> Departments,
     int department_id, boolean is_active) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.code = code;
-        this.program_id = program_id;
-        this.faculty_id = faculty_id;
+        this.programs = programs;
+        this.Departments = Departments;
         this.department_id = department_id;
         this.is_active = is_active;
     }
@@ -89,22 +97,6 @@ public class Program_Study implements Serializable {
         this.code = code;
     }
 
-    public int getProgram_id() {
-        return program_id;
-    }
-
-    public void setProgram_id(int program_id) {
-        this.program_id = program_id;
-    }
-
-    public int getFaculty_id() {
-        return faculty_id;
-    }
-
-    public void setFaculty_id(int faculty_id) {
-        this.faculty_id = faculty_id;
-    }
-
     public int getDepartment_id() {
         return department_id;
     }
@@ -123,6 +115,22 @@ public class Program_Study implements Serializable {
 
     public static long getSerialversionuid() {
         return serialVersionUID;
+    }
+
+    public Programs getPrograms() {
+        return programs;
+    }
+
+    public void setPrograms(Programs programs) {
+        this.programs = programs;
+    }
+
+    public Set<Program_Study> getDepartments() {
+        return Departments;
+    }
+
+    public void setDepartments(Set<Program_Study> departments) {
+        Departments = departments;
     }
 
     
