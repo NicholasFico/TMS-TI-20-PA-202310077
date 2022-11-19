@@ -7,27 +7,29 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
-
 public class StudentsServices {
-    
-    @Autowired
-    private StudentsRepo studentsRepo;
+  
+  @Autowired
+  private StudentsRepo studentsRepo;
 
-    public Students save(Students students){
-        return studentsRepo.save(students); //insert & update Query
-    }
+  public Students save(Students students){
+    return studentsRepo.save(students);
+  }
 
-    public Iterable<Students> findAll(){
-        return studentsRepo.findAll(); //select * from programs
-    }
+  public Students findOne(int id){
+    return studentsRepo.findById(id).get();
+  }
 
-    public Students findOne(int id){
-        return studentsRepo.findById(id).get();
-        //select * from programs where id =1
-    }
+  public Iterable<Students> findAll(){
+    return studentsRepo.findAll();
+  }
 
-    public void removeOne(int id){
-        studentsRepo.deleteById(id);
-    }
-    
+  public void removeOne(int id){
+    studentsRepo.deleteById(id);
+  }
+
+  public Iterable<Students> findByName(String name){
+    return studentsRepo.findStudentByName(name);
+  }
+
 }
